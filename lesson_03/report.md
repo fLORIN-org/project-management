@@ -1,20 +1,33 @@
 # Отчёт. Уточняем требования
 
-Замените `[[...]]` своими ссылками. Снимки загрузите в `screenshots/`.
+Репозиторий: [project-management](https://github.com/fLORIN-org/project-management)
 
-Репозиторий: [[ССЫЛКА_НА_СВОЙ_РЕПОЗИТОРИЙ]]
+Проект: [СЕВЕР — учебный запуск интернет-магазина](https://b24-1b230t.bitrix24.ru/workgroups/group/1/)
 
-Проект: [[ССЫЛКА_НА_СВОЙ_ПРОЕКТ]]
-
-Задача: [[ССЫЛКА_НА_ЗАДАЧУ_О_ПРОВЕРКАХ]]
+Задача: [Подготовить проверки последнего товара](https://b24-1b230t.bitrix24.ru/company/personal/user/1/tasks/task/view/5/)
 
 ## Скриншоты
 
-- [Вопросы в чате](screenshots/01-questions.png)
-- [Согласованные условия — версия 1](screenshots/02-answers.png)
-- [Описание задачи — версия 1](screenshots/03-requirements-v1.png)
-- [Проверки P1–P5 — версия 1](screenshots/04-checks-v1.png)
-- [Изменение срока](screenshots/05-change.png)
-- [Описание задачи — версия 2](screenshots/06-requirements-v2.png)
-- [Проверки P1–P5 — версия 2](screenshots/07-checks-v2.png)
-- [Итог после самопроверки](screenshots/08-summary.png)
+### 1. Вопросы в чате
+![Вопросы в чате](screenshots/01-questions.png)
+
+### 2. Согласованные условия — версия 1
+![Согласованные условия](screenshots/02-answers.png)
+
+### 3. Описание задачи — версия 1
+![Требования версии 1](screenshots/03-requirements-v1.png)
+
+### 4. Проверки P1–P5 — версия 1
+![Проверки версии 1](screenshots/04-checks-v1.png)
+
+### 5. Изменение срока
+![Изменение срока](screenshots/05-change.png)
+
+### 6. Описание задачи — версия 2
+![Требования версии 2](screenshots/06-requirements-v2.png)
+
+### 7. Проверки P1–P5 — версия 2
+![Проверки версии 2](screenshots/07-checks-v2.png)
+
+### 8. Итог после самопроверки
+![Итоговая самопроверка](screenshots/08-summary.png)
