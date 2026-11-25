@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Проверяет комплектность отчёта по урокам 02 и 03."""
+"""Проверяет комплектность отчёта по урокам 02, 03 и 04."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ class LessonRequirements:
 
 MAX_IMAGE_SIZE = 10 * 1024 * 1024
 MIN_WIDTH = 640
-MIN_HEIGHT = 360
+MIN_HEIGHT = 200
 MAX_DIMENSION = 12_000
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 PLACEHOLDER_PARTS = frozenset(
@@ -77,6 +77,32 @@ def lesson_requirements(lesson: str) -> LessonRequirements:
                 "08-summary.png",
             ),
             report_fields=("Репозиторий", "Проект", "Задача"),
+        )
+    if lesson == "04":
+        return LessonRequirements(
+            report_path=Path("lesson_04/report.md"),
+            screenshots_dir=Path("lesson_04/screenshots"),
+            screenshot_names=(
+                "01-parent.png",
+                "02-create-reservation.png",
+                "03-reservation-state.png",
+                "04-customer-message.png",
+                "05-test-data.png",
+                "06-integration-check.png",
+                "07-work-order.png",
+                "08-project-plan.png",
+            ),
+            report_fields=(
+                "Репозиторий",
+                "Проект",
+                "Источник требований",
+                "Общая задача",
+                "А1",
+                "А2",
+                "Б",
+                "В",
+                "Г",
+            ),
         )
     raise ValueError(f"Неизвестный урок: {lesson}")
 
@@ -303,7 +329,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--lesson",
-        choices=("02", "03"),
+        choices=("02", "03", "04"),
         default="02",
         help="номер проверяемого урока (по умолчанию: 02)",
     )

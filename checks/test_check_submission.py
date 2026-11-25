@@ -98,6 +98,54 @@ class CheckSubmissionTests(unittest.TestCase):
             encoding="utf-8",
         )
 
+    def write_valid_lesson_04_submission(self) -> None:
+        requirements = checker.lesson_requirements("04")
+        screenshots = self.root / requirements.screenshots_dir
+        screenshots.mkdir(parents=True)
+        for filename in requirements.screenshot_names:
+            (screenshots / filename).write_bytes(png())
+        links = "\n".join(
+            f"- [Скриншот](screenshots/{filename})"
+            for filename in requirements.screenshot_names
+        )
+        (self.root / requirements.report_path).write_text(
+            "\n".join(
+                (
+                    "Репозиторий: https://github.com/student/project-management",
+                    "Проект: https://portal.bitrix24.ru/workgroups/group/1/tasks/",
+                    "Источник требований: https://portal.bitrix24.ru/company/personal/user/1/tasks/task/view/1/",
+                    "Общая задача: https://portal.bitrix24.ru/company/personal/user/1/tasks/task/view/2/",
+                    "А1: https://portal.bitrix24.ru/company/personal/user/1/tasks/task/view/3/",
+                    "А2: https://portal.bitrix24.ru/company/personal/user/1/tasks/task/view/4/",
+                    "Б: https://portal.bitrix24.ru/company/personal/user/1/tasks/task/view/5/",
+                    "В: https://portal.bitrix24.ru/company/personal/user/1/tasks/task/view/6/",
+                    "Г: https://portal.bitrix24.ru/company/personal/user/1/tasks/task/view/7/",
+                    "",
+                    links,
+                    "",
+                )
+            ),
+            encoding="utf-8",
+        )
+
+    def test_valid_lesson_04_submission_passes(self) -> None:
+        self.write_valid_lesson_04_submission()
+        self.assertEqual(checker.validate(self.root, "04"), [])
+
+    def test_blank_lesson_04_report_is_rejected(self) -> None:
+        self.write_valid_lesson_04_submission()
+        requirements = checker.lesson_requirements("04")
+        (self.root / requirements.report_path).write_text("", encoding="utf-8")
+        errors = checker.validate(self.root, "04")
+        self.assertTrue(any("Не заполнено поле" in error for error in errors))
+
+    def test_missing_lesson_04_screenshot_is_rejected(self) -> None:
+        self.write_valid_lesson_04_submission()
+        requirements = checker.lesson_requirements("04")
+        (self.root / requirements.screenshots_dir / "08-project-plan.png").unlink()
+        errors = checker.validate(self.root, "04")
+        self.assertTrue(any("08-project-plan.png" in error for error in errors))
+
     def test_valid_submission_passes(self) -> None:
         self.assertEqual(self.errors(), [])
 
@@ -164,6 +212,16 @@ class CheckSubmissionTests(unittest.TestCase):
             encoding="utf-8",
         )
         self.assertTrue(any("HTTPS-адрес" in error for error in self.errors()))
+
+    def test_short_readable_screenshots_pass(self) -> None:
+        for width, height in ((826, 319), (764, 321), (809, 253), (640, 200)):
+            with self.subTest(width=width, height=height):
+                (self.screenshots / checker.SCREENSHOT_NAMES[0]).write_bytes(png(width, height))
+                self.assertEqual(self.errors(), [])
+
+    def test_too_short_screenshot_is_rejected(self) -> None:
+        (self.screenshots / checker.SCREENSHOT_NAMES[0]).write_bytes(png(826, 199))
+        self.assertTrue(any("Недопустимый размер" in error for error in self.errors()))
 
     def test_small_dimensions_are_rejected(self) -> None:
         (self.screenshots / checker.SCREENSHOT_NAMES[0]).write_bytes(png(639, 359))
